@@ -4,10 +4,9 @@
        CONFIGURATION SECTION.
 
        DATA DIVISION.
-
-       *> Include the dclgen Db2 layouts
-       COPY CAD1SQL.
-       COPY BAD1SQL.
+      *> Include the dclgen Db2 layouts
+      *COPY CAD1SQL.
+      *COPY BAD1SQL.
  
        WORKING-STORAGE SECTION.
 
