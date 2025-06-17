@@ -4,14 +4,14 @@
 export PIPELINE_SCRIPTS=/u/dbehm/git/dbb/Templates/Common-Backend-Scripts
 
 # Pipeline Workspace
-export PIPELINE_WORKSPACE=/u/dbehm/wazi-deploy/workspace/ts1_change_base
+export PIPELINE_WORKSPACE=/u/dbehm/wazi-deploy/workspace/ts1_change_customer
 
 # Adding pipeline scripts to PATH of the user running this script
 export PATH=$PIPELINE_SCRIPTS:$PATH
 export TMPHLQ="DBEHM"
 
 gitRepository=https://github.com/dennis-behm/customer.git
-buildImplementation=dbb-zappbuild
+buildImplementation=dbb
 branchName="main"
 application="customer"
 
@@ -23,27 +23,27 @@ mkdir -p $PIPELINE_WORKSPACE
 
 # This script simulates the entire pipeline process (clone, build, package & deploy)
 if [ $rc -eq 0 ]; then
-    gitClone.sh -w $application/$branchName/$buildImplementation.build_$timestamp -r $gitRepository -b $branchName
+    gitClone.sh -w $application/$branchName/${buildImplementation}build_$timestamp -r $gitRepository -b $branchName
     rc=$?
 fi
 
 
 if [ $rc -eq 0 ]; then
-    dbbBuild.sh -w $application/$branchName/$buildImplementation.build_$timestamp -a $application -b $branchName -p build -v -t '--fullBuild'
+    dbbBuild.sh -w $application/$branchName/${buildImplementation}build_$timestamp -a $application -b $branchName -p build -v -t '--fullBuild'
     rc=$?
 fi
 
 if [ $rc -eq 0 ]; then
-    packageBuildOutputs.sh -w $application/$branchName/dbb-zappbuild.build_$timestamp -a $application -b main -p release -i $timestamp -r rel-1.0.0 -u
+    packageBuildOutputs.sh -w $application/$branchName/${buildImplementation}build_$timestamp -a $application -b main -p release -i $timestamp -r rel-1.0.0 -u
     rc=$?
 fi
 
 if [ $rc -eq 0 ]; then
-    wazideploy-generate.sh -w  $application/$branchName/dbb-zappbuild.build_$timestamp -a $application -b $branchName -P release -R rel-1.0.0 -I $timestamp
+    wazideploy-generate.sh -w  $application/$branchName/${buildImplementation}build_$timestamp -a $application -b $branchName -P release -R rel-1.0.0 -I $timestamp
     rc=$?
 fi
 if [ $rc -eq 0 ]; then
-    wazideploy-deploy.sh -w $application/$branchName/dbb-zappbuild.build_$timestamp -e EOLEB7-$application-Integration.yaml -l deploy-logs/evidences/evidence.yaml
+    wazideploy-deploy.sh -w $application/$branchName/${buildImplementation}build_$timestamp -e EOLEB7-$application-Integration.yaml -l deploy-logs/evidences/evidence.yaml
     rc=$?
 fi
 
