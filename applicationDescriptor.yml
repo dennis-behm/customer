@@ -40,4 +40,4 @@ dependencies:
 - name: "base"
   type: "release"
   reference: "rel-1.0.0"
-  buildid: "2025-06-17_13-39-12"
+  buildid: "2025-06-17_14-00-42"
