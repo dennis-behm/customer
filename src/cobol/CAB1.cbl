@@ -5,7 +5,7 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
 
-       *> Include the communication area copybook (CAM1)
+      *> Include the communication area copybook (CAM1)
        COPY CAM1.
 
        PROCEDURE DIVISION.
@@ -18,7 +18,7 @@
        INITIALIZE-COMM-AREA.
            MOVE SPACES TO CAM1-COMM-AREA.
            MOVE 'CAB1' TO MAIN-NAME. *> Name of the calling module
-           MOVE 'BATCHUSR' TO USER-ID.     *> User ID of the caller     
+           MOVE 'BATCHUSR' TO USER-ID.     *> User ID of the caller
            MOVE '1234567890' TO TRANSACTION-ID. *> Example trans ID
            MOVE SPACES TO ERROR-MESSAGE.
            MOVE 0 TO RETURN-CODE.
